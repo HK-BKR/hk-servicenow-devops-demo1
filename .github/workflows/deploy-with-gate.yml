@@ -1,0 +1,40 @@
+name: deploy-with-gate
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  changeRequest:
+    runs-on: ubuntu-latest
+    name: Change Request
+    steps:
+      - name: ServiceNow DevOps Change
+        uses: ServiceNow/servicenow-devops-change@v6.1.0
+        with:
+          devops-integration-token: ${{ secrets.SN_DEVOPS_INTEGRATION_TOKEN }}
+          instance-url: ${{ secrets.SN_INSTANCE_URL }}
+          tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
+          context-github: ${{ toJSON(github) }}
+          job-name: 'Change Request'
+          change-request: >
+            {
+              "setCloseCode": true,
+              "attributes": {
+                "short_description": "Deployment of ${{ github.repository }}@${{ github.sha }}",
+                "description": "Triggered by push to main by ${{ github.actor }}",
+                "priority": "3"
+              }
+            }
+          interval: '100'
+          timeout: '3600'
+          deployment-gate: '{"environment":"deployment_gate","jobName":"Deploy"}'
+
+  deploy:
+    needs: changeRequest
+    runs-on: ubuntu-latest
+    name: Deploy
+    environment: deployment_gate
+    steps:
+      - name: Deploy
+        run: echo "Deploying..."
