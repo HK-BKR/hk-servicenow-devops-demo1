@@ -22,7 +22,7 @@ jobs:
               "setCloseCode": true,
               "attributes": {
                 "short_description": "Deployment of ${{ github.repository }}@${{ github.sha }}",
-                "description": "Triggered by push to main by ${{ github.actor }}",
+                "description": "Triggered by the push to main by ${{ github.actor }}",
                 "priority": "3"
               }
             }
