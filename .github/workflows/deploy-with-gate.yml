@@ -9,6 +9,14 @@ jobs:
     runs-on: ubuntu-latest
     name: Change Request
     steps:
+      - name: Compute schedule dates
+        id: dates
+        run: |
+          start=$(date -u -d '+10 minutes' '+%Y-%m-%d %H:%M:%S')
+          end=$(date -u -d '+2 days' '+%Y-%m-%d %H:%M:%S')
+          echo "start_date=$start" >> "$GITHUB_OUTPUT"
+          echo "end_date=$end" >> "$GITHUB_OUTPUT"
+
       - name: ServiceNow DevOps Change
         uses: ServiceNow/servicenow-devops-change@v6.1.0
         with:
@@ -24,7 +32,9 @@ jobs:
                 "short_description": "Deployment of ${{ github.repository }}@${{ github.sha }}",
                 "description": "Triggered by push to main by ${{ github.actor }}",
                 "priority": "3",
-                "chg_model": {"name": "DevOps Simplified"}
+                "chg_model": {"name": "DevOps Simplified"},
+                "start_date": "${{ steps.dates.outputs.start_date }}",
+                "end_date": "${{ steps.dates.outputs.end_date }}"
               }
             }
           interval: '100'
