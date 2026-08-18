@@ -12,7 +12,7 @@ jobs:
       - name: Compute schedule dates
         id: dates
         run: |
-          start=$(date -u -d '+10 minutes' '+%Y-%m-%d %H:%M:%S')
+          start=$(date -u -d '+20 minutes' '+%Y-%m-%d %H:%M:%S')
           end=$(date -u -d '+2 days' '+%Y-%m-%d %H:%M:%S')
           echo "start_date=$start" >> "$GITHUB_OUTPUT"
           echo "end_date=$end" >> "$GITHUB_OUTPUT"
