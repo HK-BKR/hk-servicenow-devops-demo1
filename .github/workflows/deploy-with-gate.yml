@@ -22,8 +22,9 @@ jobs:
               "setCloseCode": true,
               "attributes": {
                 "short_description": "Deployment of ${{ github.repository }}@${{ github.sha }}",
-                "description": "Triggered by the push to main by ${{ github.actor }}",
-                "priority": "3"
+                "description": "Triggered by push to main by ${{ github.actor }}",
+                "priority": "3",
+                "chg_model": {"name": "DevOps Simplified"}
               }
             }
           interval: '100'
