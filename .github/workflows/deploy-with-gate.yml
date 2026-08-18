@@ -23,8 +23,7 @@ jobs:
               "attributes": {
                 "short_description": "Deployment of ${{ github.repository }}@${{ github.sha }}",
                 "description": "Triggered by push to main by ${{ github.actor }}",
-                "priority": "3",
-                "chg_model": {"name": "DevOps Simplified"}
+                "priority": "3"
               }
             }
           interval: '100'
